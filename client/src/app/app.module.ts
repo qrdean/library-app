@@ -18,15 +18,12 @@ import { BookListComponent } from "./library-components/book-list/book-list.comp
 
 // Service
 import { BookService } from "./library-components/book.service";
-import { ListItemComponent } from "./shared/list-item/list-item.component";
+import { UserProfileComponent } from './user-components/user-profile/user-profile.component';
+import { UserSignUpComponent } from './user-components/user-sign-up/user-sign-up.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NewBookComponent,
-    BookListComponent,
-    ListItemComponent
-  ],
+  declarations: [AppComponent, NewBookComponent, BookListComponent, UserProfileComponent, UserSignUpComponent, LoginComponent],
   imports: [
     // Material
     MatButtonModule,

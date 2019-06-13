@@ -14,11 +14,15 @@
         <mat-placeholder>Title</mat-placeholder>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [formControl]="bookForm.controls['authors']" />
-        <mat-placeholder>Authors</mat-placeholder>
+        <textarea
+          matInput
+          textarea
+          [formControl]="bookForm.controls['authors']"
+        ></textarea>
+        <mat-placeholder>Author Name</mat-placeholder>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [formControl]="bookForm.controls['publish_date']" />
+        <input matInput [formControl]="bookForm.controls['publishDate']" />
         <mat-placeholder>Publish Date</mat-placeholder>
       </mat-form-field>
       <mat-checkbox [formControl]="bookForm.controls['available']"

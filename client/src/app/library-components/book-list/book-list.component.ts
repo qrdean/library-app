@@ -21,4 +21,8 @@ export class BookListComponent implements OnInit {
   addBook() {
     this.router.navigateByUrl("/new-book");
   }
+
+  checkout(book) {
+    console.log(book);
+  }
 }

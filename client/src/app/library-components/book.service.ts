@@ -17,7 +17,7 @@ export class BookService {
   }
 
   addBook(book: any) {
-    return this.http.post<any>(AppConstants.BOOKS_URL + "/" + book._id, book);
+    return this.http.post<any>(AppConstants.BOOKS_URL, book);
   }
 
   updateBook(book: any) {

@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
 
 import { BookService } from "../book.service";
 import { Router } from "@angular/router";
+
+import { BookModel } from "../book.model";
 
 @Component({
   selector: "app-new-book",
@@ -19,7 +21,6 @@ export class NewBookComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    console.log(this.bookForm);
   }
 
   buildForm() {
@@ -28,13 +29,34 @@ export class NewBookComponent implements OnInit {
       isbn: null,
       title: null,
       authors: null,
-      publish_date: null,
+      publishDate: null,
       available: true
     });
   }
 
   addBook() {
-    console.log(this.bookForm);
+    const authors = this.bookForm.get("authors").value;
+    const splitAuthors = authors ? authors.split(",") : null;
+    console.log(
+      this.bookForm.get("lccn").value,
+      this.bookForm.get("isbn").value,
+      this.bookForm.get("title").value,
+      splitAuthors,
+      this.bookForm.get("publishDate").value,
+      this.bookForm.get("available").value
+    );
+    const newBook: BookModel = new BookModel(
+      this.bookForm.get("lccn").value,
+      this.bookForm.get("isbn").value,
+      this.bookForm.get("title").value,
+      splitAuthors,
+      this.bookForm.get("publishDate").value,
+      this.bookForm.get("available").value
+    );
+
+    this.bookService.addBook(newBook).subscribe(result => {
+      console.log(result);
+    });
   }
 
   goBack() {

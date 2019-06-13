@@ -4,8 +4,17 @@
     {{ book.isbn }}
     {{ book.title }}
     {{ book.publishDate }}
-    {{ book.available }}
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="checkout(book)"
+      [disabled]="!book.available"
+    >
+      Checkout
+    </button>
   </div>
+
   <button mat-raised-button color="primary" type="button" (click)="addBook()">
     Add New Book
   </button>
