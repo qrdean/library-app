@@ -1,0 +1,45 @@
+<section>
+  <div>
+    <form [formGroup]="bookForm">
+      <mat-form-field>
+        <input matInput [formControl]="bookForm.controls['lccn']" />
+        <mat-placeholder>LCCN</mat-placeholder>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [formControl]="bookForm.controls['isbn']" />
+        <mat-placeholder>ISBN</mat-placeholder>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [formControl]="bookForm.controls['title']" />
+        <mat-placeholder>Title</mat-placeholder>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [formControl]="bookForm.controls['authors']" />
+        <mat-placeholder>Authors</mat-placeholder>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [formControl]="bookForm.controls['publish_date']" />
+        <mat-placeholder>Publish Date</mat-placeholder>
+      </mat-form-field>
+      <mat-checkbox [formControl]="bookForm.controls['available']"
+        >Available</mat-checkbox
+      >
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="addBook()"
+      >
+        Add Book
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="goBack()"
+      >
+        Go Back
+      </button>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,12 @@
+<div>
+  <div *ngFor="let book of books">
+    {{ book.lccn }}
+    {{ book.isbn }}
+    {{ book.title }}
+    {{ book.publishDate }}
+    {{ book.available }}
+  </div>
+  <button mat-raised-button color="primary" type="button" (click)="addBook()">
+    Add New Book
+  </button>
+</div>
