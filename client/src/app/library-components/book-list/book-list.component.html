@@ -1,11 +1,12 @@
 <section class="wrapper">
-  <div class="grid-container">
+  <div class="grid-container header">
     <div class="grid-lccn">LCCN</div>
     <div class="grid-isbn">ISBN</div>
     <div class="grid-title">Title</div>
     <div class="grid-authors">Authors</div>
     <div class="grid-publish-date">Publish Date</div>
-    <div class="grid-available"></div>
+    <div class="grid-available">Available</div>
+    <div class="grid-details"></div>
   </div>
   <div *ngFor="let book of books">
     <div class="grid-container">
@@ -16,13 +17,14 @@
         {{ book.authors[0] }}<span *ngIf="book.authors.length > 1">...</span>
       </div>
       <div class="grid-publish-date">{{ book.publishDate }}</div>
+      <div class="grid-available" *ngIf="book.available">Yes</div>
+      <div class="grid-available" *ngIf="!book.available">No</div>
       <button
-        class="grid-available"
+        class="grid-details"
         mat-raised-button
         color="primary"
         type="button"
         (click)="bookDetails(book)"
-        class="grid-details"
       >
         Details
       </button>

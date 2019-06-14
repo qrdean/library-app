@@ -21,6 +21,10 @@
           [formControl]="bookForm.controls['authors']"
         ></textarea>
         <mat-placeholder>Author Name</mat-placeholder>
+        <mat-hint
+          >Separate multiple author names with commas i.e. James Brown, Emily
+          Dickens</mat-hint
+        >
       </mat-form-field>
       <mat-form-field class="form-field">
         <input matInput [formControl]="bookForm.controls['publishDate']" />
@@ -42,8 +46,6 @@
           Add Book
         </button>
       </div>
-      <input type="file" (change)="handleExcelFile($event)" />
-      <button (click)="submitBulkUpload()">bulk</button>
     </form>
   </div>
 </section>

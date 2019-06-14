@@ -25,6 +25,7 @@ import { LoginComponent } from "./login/login.component";
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
 import { BookDetailsComponent } from './library-components/book-details/book-details.component';
+import { BulkUploadComponent } from './library-components/bulk-upload/bulk-upload.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { BookDetailsComponent } from './library-components/book-details/book-det
     LoginComponent,
     HeaderComponent,
     FooterComponent,
-    BookDetailsComponent
+    BookDetailsComponent,
+    BulkUploadComponent
   ],
   imports: [
     // Material

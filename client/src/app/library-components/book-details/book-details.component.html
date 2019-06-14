@@ -2,7 +2,7 @@
   <h1>Book Details</h1>
   <h2>{{ book?.title }}</h2>
   <div *ngIf="book">
-    <h3 *ngFor="let author of book.authors">{{ author }}</h3>
+    <h4 *ngFor="let author of book.authors">{{ author }}</h4>
   </div>
   <p>LCCN: {{ book?.lccn }}</p>
   <p>ISBN: {{ book?.isbn }}</p>
@@ -10,7 +10,7 @@
   <button
     mat-raised-button
     *ngIf="book?.available"
-    [color]="primary"
+    color="primary"
     (click)="checkOut(book)"
   >
     Checkout
@@ -18,7 +18,7 @@
   <button
     mat-raised-button
     *ngIf="!book?.available"
-    [color]="primary"
+    color="primary"
     (click)="checkIn(book)"
   >
     Check In
