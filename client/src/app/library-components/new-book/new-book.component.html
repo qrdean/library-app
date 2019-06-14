@@ -42,6 +42,8 @@
           Add Book
         </button>
       </div>
+      <input type="file" (change)="handleExcelFile($event)" />
+      <button (click)="submitBulkUpload()">bulk</button>
     </form>
   </div>
 </section>
