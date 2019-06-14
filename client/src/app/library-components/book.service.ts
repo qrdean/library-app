@@ -2,10 +2,13 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { AppConstants } from "../shared/app.constants";
+import { Subject, BehaviorSubject } from "rxjs";
+import { BookModel } from "./book.model";
 @Injectable({
   providedIn: "root"
 })
 export class BookService {
+  book$: BehaviorSubject<BookModel> = new BehaviorSubject<BookModel>(null);
   constructor(private http: HttpClient) {}
 
   getBooks() {

@@ -5,7 +5,7 @@
     <div class="grid-title">Title</div>
     <div class="grid-authors">Authors</div>
     <div class="grid-publish-date">Publish Date</div>
-    <div class="grid-available">Available</div>
+    <div class="grid-available"></div>
   </div>
   <div *ngFor="let book of books">
     <div class="grid-container">
@@ -21,11 +21,21 @@
         mat-raised-button
         color="primary"
         type="button"
+        (click)="bookDetails(book)"
+        class="grid-details"
+      >
+        Details
+      </button>
+      <!-- <button
+        class="grid-available"
+        mat-raised-button
+        color="primary"
+        type="button"
         (click)="checkout(book)"
         [disabled]="!book.available"
       >
         Checkout
-      </button>
+      </button> -->
     </div>
   </div>
 </section>

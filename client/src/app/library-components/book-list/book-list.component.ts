@@ -29,4 +29,9 @@ export class BookListComponent implements OnInit {
       console.log(result);
     });
   }
+
+  bookDetails(book: BookModel) {
+    this.router.navigateByUrl("/book-detail");
+    this.bookService.book$.next(book);
+  }
 }

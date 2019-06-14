@@ -1,0 +1,26 @@
+<section class="wrapper">
+  <h1>Book Details</h1>
+  <h2>{{ book?.title }}</h2>
+  <div *ngIf="book">
+    <h3 *ngFor="let author of book.authors">{{ author }}</h3>
+  </div>
+  <p>LCCN: {{ book?.lccn }}</p>
+  <p>ISBN: {{ book?.isbn }}</p>
+  <p>Publishing Date: {{ book?.publishDate }}</p>
+  <button
+    mat-raised-button
+    *ngIf="book?.available"
+    [color]="primary"
+    (click)="checkOut(book)"
+  >
+    Checkout
+  </button>
+  <button
+    mat-raised-button
+    *ngIf="!book?.available"
+    [color]="primary"
+    (click)="checkIn(book)"
+  >
+    Check In
+  </button>
+</section>

@@ -24,6 +24,7 @@ import { UserSignUpComponent } from "./user-components/user-sign-up/user-sign-up
 import { LoginComponent } from "./login/login.component";
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
+import { BookDetailsComponent } from './library-components/book-details/book-details.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FooterComponent } from "./footer/footer.component";
     UserSignUpComponent,
     LoginComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    BookDetailsComponent
   ],
   imports: [
     // Material
