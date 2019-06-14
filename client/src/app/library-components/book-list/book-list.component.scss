@@ -1,0 +1,33 @@
+.wrapper {
+  width: calc(100% - 5%);
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas: "lccn isbn title authors publish-date available";
+  grid-template-columns: 10% 10% 30% 30% 10% 10%;
+  grid-column-gap: 2px;
+}
+
+.grid-lccn {
+  grid-area: lccn;
+}
+.grid-isbn {
+  grid-area: isbn;
+}
+
+.grid-title {
+  grid-area: title;
+}
+
+.grid-authors {
+  grid-area: authors;
+}
+
+.grid-publish-date {
+  grid-area: publish-date;
+}
+
+.grid-available {
+  grid-area: available;
+}

@@ -1,21 +1,31 @@
-<div>
-  <div *ngFor="let book of books">
-    {{ book.lccn }}
-    {{ book.isbn }}
-    {{ book.title }}
-    {{ book.publishDate }}
-    <button
-      mat-raised-button
-      color="primary"
-      type="button"
-      (click)="checkout(book)"
-      [disabled]="!book.available"
-    >
-      Checkout
-    </button>
+<section class="wrapper">
+  <div class="grid-container">
+    <div class="grid-lccn">LCCN</div>
+    <div class="grid-isbn">ISBN</div>
+    <div class="grid-title">Title</div>
+    <div class="grid-authors">Authors</div>
+    <div class="grid-publish-date">Publish Date</div>
+    <div class="grid-available">Available</div>
   </div>
-
-  <button mat-raised-button color="primary" type="button" (click)="addBook()">
-    Add New Book
-  </button>
-</div>
+  <div *ngFor="let book of books">
+    <div class="grid-container">
+      <div class="grid-lccn">{{ book.lccn }}</div>
+      <div class="grid-isbn">{{ book.isbn }}</div>
+      <div class="grid-title">{{ book.title }}</div>
+      <div class="grid-authors">
+        {{ book.authors[0] }}<span *ngIf="book.authors.length > 1">...</span>
+      </div>
+      <div class="grid-publish-date">{{ book.publishDate }}</div>
+      <button
+        class="grid-available"
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="checkout(book)"
+        [disabled]="!book.available"
+      >
+        Checkout
+      </button>
+    </div>
+  </div>
+</section>

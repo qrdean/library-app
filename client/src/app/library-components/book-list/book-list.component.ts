@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { BookService } from "../book.service";
+import { BookModel } from "../book.model";
 
 @Component({
   selector: "app-book-list",
@@ -22,7 +23,10 @@ export class BookListComponent implements OnInit {
     this.router.navigateByUrl("/new-book");
   }
 
-  checkout(book) {
-    console.log(book);
+  checkout(book: BookModel) {
+    book.available = false;
+    this.bookService.updateBook(book).subscribe(result => {
+      console.log(result);
+    });
   }
 }

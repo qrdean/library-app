@@ -1,19 +1,20 @@
-<section>
+<section class="wrapper">
+  <h1 class="title">Add a New Book</h1>
   <div>
-    <form [formGroup]="bookForm">
-      <mat-form-field>
+    <form class="form" [formGroup]="bookForm">
+      <mat-form-field class="form-field">
         <input matInput [formControl]="bookForm.controls['lccn']" />
         <mat-placeholder>LCCN</mat-placeholder>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="form-field">
         <input matInput [formControl]="bookForm.controls['isbn']" />
         <mat-placeholder>ISBN</mat-placeholder>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="form-field">
         <input matInput [formControl]="bookForm.controls['title']" />
         <mat-placeholder>Title</mat-placeholder>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="form-field">
         <textarea
           matInput
           textarea
@@ -21,29 +22,35 @@
         ></textarea>
         <mat-placeholder>Author Name</mat-placeholder>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="form-field">
         <input matInput [formControl]="bookForm.controls['publishDate']" />
         <mat-placeholder>Publish Date</mat-placeholder>
       </mat-form-field>
-      <mat-checkbox [formControl]="bookForm.controls['available']"
+      <mat-checkbox
+        class="form-field"
+        [formControl]="bookForm.controls['available']"
         >Available</mat-checkbox
       >
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="addBook()"
-      >
-        Add Book
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="goBack()"
-      >
-        Go Back
-      </button>
+      <div class="button-container">
+        <button
+          class="submit button"
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="addBook()"
+        >
+          Add Book
+        </button>
+        <button
+          class="button"
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="goBack()"
+        >
+          Go Back
+        </button>
+      </div>
     </form>
   </div>
 </section>
