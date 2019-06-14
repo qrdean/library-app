@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
-
-import { BookService } from "../book.service";
 import { Router } from "@angular/router";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+import { BookService } from "../book.service";
 
 import { BookModel } from "../book.model";
 
@@ -12,6 +13,8 @@ import { BookModel } from "../book.model";
   styleUrls: ["./new-book.component.scss"]
 })
 export class NewBookComponent implements OnInit {
+  destroy$: Subject<void> = new Subject<void>();
+
   bookForm: FormGroup;
   constructor(
     private router: Router,
@@ -54,12 +57,20 @@ export class NewBookComponent implements OnInit {
       this.bookForm.get("available").value
     );
 
-    this.bookService.addBook(newBook).subscribe(result => {
-      console.log(result);
-    });
+    this.bookService
+      .addBook(newBook)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(result => {
+        console.log(result);
+      });
   }
 
   goBack() {
     this.router.navigateByUrl("/");
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

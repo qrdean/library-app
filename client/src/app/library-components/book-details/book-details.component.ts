@@ -4,12 +4,15 @@ import {
   OnInit,
   Output,
   AfterViewChecked,
-  AfterViewInit
+  AfterViewInit,
+  OnDestroy
 } from "@angular/core";
 import { BookModel } from "../book.model";
 
 import { BookService } from "../book.service";
 import { Router } from "@angular/router";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "app-book-details",
@@ -17,12 +20,13 @@ import { Router } from "@angular/router";
   styleUrls: ["./book-details.component.scss"]
 })
 export class BookDetailsComponent
-  implements OnInit, AfterViewChecked, AfterViewInit {
+  implements OnInit, AfterViewChecked, AfterViewInit, OnDestroy {
+  destroy$: Subject<void> = new Subject<void>();
   book: BookModel;
   constructor(private router: Router, private bookService: BookService) {}
 
   ngOnInit() {
-    this.bookService.book$.subscribe(book => {
+    this.bookService.book$.pipe(takeUntil(this.destroy$)).subscribe(book => {
       this.book = book;
     });
   }
@@ -39,15 +43,26 @@ export class BookDetailsComponent
 
   checkIn(book: BookModel) {
     this.book.available = true;
-    this.bookService.updateBook(book).subscribe(result => {
-      console.log(result);
-    });
+    this.bookService
+      .updateBook(book)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(result => {
+        console.log(result);
+      });
   }
 
   checkOut(book: BookModel) {
     this.book.available = false;
-    this.bookService.updateBook(book).subscribe(result => {
-      console.log(result);
-    });
+    this.bookService
+      .updateBook(book)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(result => {
+        console.log(result);
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
