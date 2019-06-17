@@ -57,6 +57,8 @@ provider:
 #    - exclude-me-dir/**
 
 functions: # add 4 functions for CRUD
+  authorize:
+    handler: functions/authorize.handler
   create:
     handler: handler.create # point to exported create function in handler.js
     events:
@@ -64,6 +66,7 @@ functions: # add 4 functions for CRUD
           path: notes # path will be domain.name.com/dev/notes
           method: post
           cors: true
+          authorizer: authorize
   getOne:
     handler: handler.getOne
     events:
@@ -71,6 +74,7 @@ functions: # add 4 functions for CRUD
           path: notes/{id} # path will be domain.name.com/dev/notes/1
           method: get
           cors: true
+          authorizer: authorize
   getAll:
     handler: handler.getAll # path will be domain.name.com/dev/notes
     events:
@@ -78,6 +82,7 @@ functions: # add 4 functions for CRUD
           path: notes
           method: get
           cors: true
+          authorizer: authorize
   update:
     handler: handler.update # path will be domain.name.com/dev/notes/1
     events:
@@ -85,6 +90,7 @@ functions: # add 4 functions for CRUD
           path: notes/{id}
           method: put
           cors: true
+          authorizer: authorize
   delete:
     handler: handler.delete
     events:
@@ -92,6 +98,7 @@ functions: # add 4 functions for CRUD
           path: notes/{id} # path will be domain.name.com/dev/notes/1
           method: delete
           cors: true
+          authorizer: authorize
 
   createBook:
     handler: handler.createBook
@@ -100,6 +107,7 @@ functions: # add 4 functions for CRUD
           path: books # path will be domain.name.com/dev/notes
           method: post
           cors: true
+          authorizer: authorize
 
   getOneBook:
     handler: handler.getOneBook
@@ -108,6 +116,8 @@ functions: # add 4 functions for CRUD
           path: books/{id} # path will be domain.name.com/dev/books/1
           method: get
           cors: true
+          authorizer: authorize
+
   getAllBooks:
     handler: handler.getAllBooks
     events:
@@ -115,6 +125,7 @@ functions: # add 4 functions for CRUD
           path: books
           method: get
           cors: true
+          authorizer: authorize
 
   updateBook:
     handler: handler.updateBook
@@ -123,6 +134,7 @@ functions: # add 4 functions for CRUD
           path: books/{id}
           method: put
           cors: true
+          authorizer: authorize
 
   deleteBook:
     handler: handler.deleteBook
@@ -130,6 +142,23 @@ functions: # add 4 functions for CRUD
       - http:
           path: books/{id}
           method: delete
+          cors: true
+          authorizer: authorize
+
+  register:
+    handler: handler.register
+    events:
+      - http:
+          path: user/register
+          method: post
+          cors: true
+
+  login:
+    handler: handler.login
+    events:
+      - http:
+          path: user/login
+          method: post
           cors: true
 
 plugins:
@@ -175,6 +204,17 @@ plugins:
 #      variable2: value2
 
 # you can add CloudFormation resource templates here
+resources:
+  Resources:
+    GatewayResponse:
+      Type: "AWS::ApiGateway::GatewayResonse"
+      Properties:
+        ResponseProperties:
+          gatewayresponse.header.WWW-Authenticate: "'Basic'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: "ApiGatewayRestApi"
+        StatusCode: "401"
 #resources:
 #  Resources:
 #    NewResource:

@@ -7,7 +7,10 @@ import {
   MatButtonModule,
   MatInputModule,
   MatCheckboxModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatSidenavModule,
+  MatDialogModule,
+  MatSnackBarModule
 } from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from "./app-routing.module";
@@ -24,8 +27,13 @@ import { UserSignUpComponent } from "./user-components/user-sign-up/user-sign-up
 import { LoginComponent } from "./login/login.component";
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
-import { BookDetailsComponent } from './library-components/book-details/book-details.component';
-import { BulkUploadComponent } from './library-components/bulk-upload/bulk-upload.component';
+import { BookDetailsComponent } from "./library-components/book-details/book-details.component";
+import { BulkUploadComponent } from "./library-components/bulk-upload/bulk-upload.component";
+import { NavContainerComponent } from "./nav-container/nav-container.component";
+import { DialogComponent } from "./shared/dialog/dialog.component";
+import { BulkAddDialogComponent } from "./shared/bulk-add-dialog/bulk-add-dialog.component";
+import { MessageService } from "./shared/message.service";
+import { EditBookDialogComponent } from "./shared/edit-book-dialog/edit-book-dialog.component";
 
 @NgModule({
   declarations: [
@@ -38,7 +46,11 @@ import { BulkUploadComponent } from './library-components/bulk-upload/bulk-uploa
     HeaderComponent,
     FooterComponent,
     BookDetailsComponent,
-    BulkUploadComponent
+    BulkUploadComponent,
+    NavContainerComponent,
+    DialogComponent,
+    BulkAddDialogComponent,
+    EditBookDialogComponent
   ],
   imports: [
     // Material
@@ -46,6 +58,9 @@ import { BulkUploadComponent } from './library-components/bulk-upload/bulk-uploa
     MatInputModule,
     MatCheckboxModule,
     MatToolbarModule,
+    MatSidenavModule,
+    MatDialogModule,
+    MatSnackBarModule,
     // Angular
     BrowserAnimationsModule,
     HttpClientModule,
@@ -54,7 +69,8 @@ import { BulkUploadComponent } from './library-components/bulk-upload/bulk-uploa
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [BookService],
+  entryComponents: [BulkAddDialogComponent, EditBookDialogComponent],
+  providers: [BookService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -3,6 +3,7 @@ require("dotenv").config({ path: "./variables.env" });
 const Note = require("./models/Note");
 const BookFunctions = require("./functions/book-functions");
 const UserFunctions = require("./functions/user-functions");
+const Login = require("./functions/login");
 const connectToDatabase = require("./db");
 
 module.exports.create = (event, context, callback) => {
@@ -160,5 +161,21 @@ module.exports.createUser = (event, context, callback) => {
 
   connectToDatabase().then(() => {
     UserFunctions.create(event, context, callback);
+  });
+};
+
+module.exports.register = (event, context, callback) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  connectToDatabase().then(() => {
+    UserFunctions.register(event, context, callback);
+  });
+};
+
+module.exports.login = (event, context, callback) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  connectToDatabase().then(() => {
+    Login.handler(event, context, callback);
   });
 };

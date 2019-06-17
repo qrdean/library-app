@@ -9,10 +9,13 @@ import { BookModel } from "./book.model";
 })
 export class BookService {
   book$: BehaviorSubject<BookModel> = new BehaviorSubject<BookModel>(null);
+  books$: BehaviorSubject<BookModel[]> = new BehaviorSubject<BookModel[]>(null);
   constructor(private http: HttpClient) {}
 
   getBooks() {
-    return this.http.get<any>(AppConstants.BOOKS_URL);
+    this.http.get<any>(AppConstants.BOOKS_URL).subscribe(books => {
+      this.books$.next(books);
+    });
   }
 
   getBookById(book: any) {

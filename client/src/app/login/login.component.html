@@ -1,3 +1,28 @@
-<p>
-  login works!
-</p>
+<div class="wrapper">
+  <h1 class="title">Welcome to the Library!</h1>
+  <form class="form" [formGroup]="loginForm">
+    <mat-form-field class="form-field">
+      <input matInput [formControl]="loginForm.controls['username']" />
+      <mat-placeholder>Username</mat-placeholder>
+      <mat-error>Please enter a username</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input
+        matInput
+        type="password"
+        [formControl]="loginForm.controls['password']"
+      />
+      <mat-placeholder>Password</mat-placeholder>
+      <mat-error>Please enter a password</mat-error>
+    </mat-form-field>
+    <button
+      class="submit button"
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="login()"
+    >
+      Login
+    </button>
+  </form>
+</div>

@@ -1,0 +1,58 @@
+<div class="wrapper">
+  <h1 class="title">Edit {{ data.book.title }}</h1>
+  <form class="form" [formGroup]="bookForm">
+    <mat-form-field class="form-field">
+      <input matInput [formControl]="bookForm.controls['lccn']" />
+      <mat-placeholder>LCCN</mat-placeholder>
+      <mat-error>Please Enter a LCCN</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput [formControl]="bookForm.controls['isbn']" />
+      <mat-placeholder>ISBN</mat-placeholder>
+      <mat-error>Please Enter an ISBN</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput [formControl]="bookForm.controls['title']" />
+      <mat-placeholder>Title</mat-placeholder>
+      <mat-error>Please Enter a Title</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <textarea
+        matInput
+        textarea
+        [formControl]="bookForm.controls['authors']"
+      ></textarea>
+      <mat-placeholder>Author Name</mat-placeholder>
+      <mat-hint
+        >Separate multiple author names with commas i.e. James Brown, Emily
+        Dickens</mat-hint
+      >
+      <mat-error>Please Enter an Author</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput [formControl]="bookForm.controls['publishDate']" />
+      <mat-placeholder>Publish Year</mat-placeholder>
+      <mat-error>Please Enter a Year</mat-error>
+    </mat-form-field>
+    <div class="button-container">
+      <button
+        class="submit button"
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="submit()"
+      >
+        Update Book
+      </button>
+      <button
+        class="button"
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

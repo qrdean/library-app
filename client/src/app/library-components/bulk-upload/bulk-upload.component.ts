@@ -6,6 +6,7 @@ import { BookService } from "../book.service";
 import { BookModel } from "../book.model";
 
 import * as XLSX from "xlsx";
+import { MessageService } from "./../../shared/message.service";
 
 @Component({
   selector: "app-bulk-upload",
@@ -15,7 +16,10 @@ import * as XLSX from "xlsx";
 export class BulkUploadComponent implements OnInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
   bookJson: [];
-  constructor(private bookService: BookService) {}
+  constructor(
+    private bookService: BookService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {}
 
@@ -52,6 +56,8 @@ export class BulkUploadComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe(result => {
           console.log(result);
+          this.messageService.addToast("New Books Added");
+          this.bookService.getBooks();
           this.bookJson = null;
         });
     } else {

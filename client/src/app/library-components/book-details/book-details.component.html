@@ -8,6 +8,7 @@
   <p>ISBN: {{ book?.isbn }}</p>
   <p>Publishing Date: {{ book?.publishDate }}</p>
   <button
+    class="button"
     mat-raised-button
     *ngIf="book?.available"
     color="primary"
@@ -16,11 +17,20 @@
     Checkout
   </button>
   <button
+    class="button"
     mat-raised-button
     *ngIf="!book?.available"
     color="primary"
     (click)="checkIn(book)"
   >
     Check In
+  </button>
+  <button
+    class="button"
+    mat-raised-button
+    color="primary"
+    (click)="updateDialog(book)"
+  >
+    Edit Books
   </button>
 </section>
