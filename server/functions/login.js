@@ -25,26 +25,39 @@ module.exports.handler = (event, $options, callback) => {
   try {
     // Authenticate user
     users.login(email, password, (err, result) => {
-      const user = result;
-      const payload = {
-        profile: user.userProfile,
-        role: user.role
-      };
-      // Issue JWT
-      const token = jwt.sign(payload, JWT_SECRET, signOptions);
-      const response = {
-        // Success response
-        statusCode: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*"
-        },
-        body: JSON.stringify({
-          token
-        })
-      };
+      if (result) {
+        const user = result;
+        const payload = {
+          profile: user.userProfile,
+          role: user.role
+        };
+        // Issue JWT
+        const token = jwt.sign(payload, JWT_SECRET, signOptions);
+        const response = {
+          // Success response
+          statusCode: 200,
+          headers: {
+            "Access-Control-Allow-Origin": "*"
+          },
+          body: JSON.stringify({
+            token
+          })
+        };
 
-      // Return response
-      callback(null, response);
+        // Return response
+        return callback(null, response);
+      } else {
+        const response = {
+          statusCode: 401,
+          headers: {
+            "Access-Control-Allow-Origin": "*"
+          },
+          body: JSON.stringify({
+            error: "Unauthorized"
+          })
+        };
+        return callback(null, response);
+      }
     });
   } catch (e) {
     const response = {

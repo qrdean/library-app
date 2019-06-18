@@ -21,7 +21,6 @@ module.exports.addRole = (id, role, callback) => {
 module.exports.getById = (id, context, callback) => {
   Roles.findOne({ userId: id })
     .then(role => {
-      console.log(role);
       if (role) {
         return callback(null, {
           statusCode: 200,
