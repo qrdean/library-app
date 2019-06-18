@@ -2,5 +2,32 @@
   <mat-toolbar color="primary" class="toolbar">
     Library
     <app-nav-container></app-nav-container>
+    <button
+      mat-raised-button
+      color="accent"
+      class="button"
+      *ngIf="authService.isLoggedIn()"
+      (click)="logout()"
+    >
+      Logout
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      class="button"
+      *ngIf="authService.isLoggedOut()"
+      (click)="login()"
+    >
+      Login
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      class="button"
+      *ngIf="authService.isLoggedOut()"
+      (click)="register()"
+    >
+      Sign Up
+    </button>
   </mat-toolbar>
 </header>

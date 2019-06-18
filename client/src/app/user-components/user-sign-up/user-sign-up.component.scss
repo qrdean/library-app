@@ -1,0 +1,40 @@
+.wrapper {
+  text-align: center;
+  overflow: auto;
+  height: 100%;
+}
+
+.title {
+  font-size: 1.3em;
+  font-weight: 300;
+  font-family: "Open Sans", sans-serif;
+  margin-bottom: 20px;
+  color: #353535;
+  text-align: center;
+}
+
+.form {
+  margin-top: 20px;
+  border: solid 1px #aaa;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 30px;
+  box-shadow: 1px 1px 5px #ccc;
+  text-align: left;
+  width: calc(100% - 20%);
+  max-width: 700px;
+}
+
+.form-field {
+  width: 100%;
+}
+.button-container {
+  text-align: center;
+}
+.submit {
+  margin-top: 10px;
+}
+
+.button {
+  margin: 5px;
+}

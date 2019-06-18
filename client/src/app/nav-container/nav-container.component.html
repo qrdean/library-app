@@ -1,11 +1,18 @@
 <div class="button-container">
-  <button class="button" mat-raised-button color="accent" (click)="navigate()">
+  <button
+    class="button"
+    mat-raised-button
+    color="accent"
+    *ngIf="authService.isLoggedIn()"
+    (click)="navigate()"
+  >
     Library List
   </button>
   <button
     class="button"
     mat-raised-button
     color="accent"
+    *ngIf="authService.isLoggedIn()"
     (click)="navigate('new-book')"
   >
     Add New Book

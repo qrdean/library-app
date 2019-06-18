@@ -49,7 +49,7 @@ const authorizations = userRole => {
   ];
   if (userRole == 1) {
     return adminPrivileges;
-  } else if (useRole == 2) {
+  } else if (userRole == 2) {
     return userPrivileges;
   }
   return [];

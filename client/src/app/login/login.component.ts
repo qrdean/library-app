@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { AuthService } from "../auth/auth.service";
 
 @Component({
   selector: "app-login",
@@ -9,7 +10,11 @@ import { Router } from "@angular/router";
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.buildForm();
@@ -23,6 +28,18 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log(this.loginForm);
+    if (
+      this.loginForm.get("username").value !== null &&
+      this.loginForm.get("password").value !== null
+    ) {
+      this.authService
+        .login(
+          this.loginForm.get("username").value,
+          this.loginForm.get("password").value
+        )
+        .subscribe(result => {
+          this.router.navigateByUrl("/book-list");
+        });
+    }
   }
 }

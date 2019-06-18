@@ -1,7 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 import {
   MatButtonModule,
@@ -34,6 +34,9 @@ import { DialogComponent } from "./shared/dialog/dialog.component";
 import { BulkAddDialogComponent } from "./shared/bulk-add-dialog/bulk-add-dialog.component";
 import { MessageService } from "./shared/message.service";
 import { EditBookDialogComponent } from "./shared/edit-book-dialog/edit-book-dialog.component";
+import { AuthService } from "./auth/auth.service";
+import { AuthInterceptor } from "./auth/auth-interceptor.service";
+import { AuthGuard } from "./auth/user-auth.guard";
 
 @NgModule({
   declarations: [
@@ -70,7 +73,13 @@ import { EditBookDialogComponent } from "./shared/edit-book-dialog/edit-book-dia
     AppRoutingModule
   ],
   entryComponents: [BulkAddDialogComponent, EditBookDialogComponent],
-  providers: [BookService, MessageService],
+  providers: [
+    BookService,
+    MessageService,
+    AuthService,
+    AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

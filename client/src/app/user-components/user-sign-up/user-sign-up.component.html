@@ -1,3 +1,38 @@
-<p>
-  user-sign-up works!
-</p>
+<div class="wrapper">
+  <h1 class="title">New User Registration</h1>
+  <form class="form" [formGroup]="signUpForm">
+    <mat-form-field class="form-field">
+      <input matInput [formControl]="signUpForm.controls['email']" />
+      <mat-placeholder>Email</mat-placeholder>
+      <mat-error>Please enter a username</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input
+        matInput
+        type="password"
+        [formControl]="signUpForm.controls['password']"
+      />
+      <mat-placeholder>Password</mat-placeholder>
+      <mat-error>Please enter a password</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput [formControl]="signUpForm.controls['firstName']" />
+      <mat-placeholder>First Name</mat-placeholder>
+      <mat-error>Please enter a First name</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput [formControl]="signUpForm.controls['lastName']" />
+      <mat-placeholder>Last Name</mat-placeholder>
+      <mat-error>Please enter a Last name</mat-error>
+    </mat-form-field>
+    <button
+      class="submit button"
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="register()"
+    >
+      Register
+    </button>
+  </form>
+</div>

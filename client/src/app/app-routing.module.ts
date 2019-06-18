@@ -4,11 +4,27 @@ import { BookListComponent } from "./library-components/book-list/book-list.comp
 import { NewBookComponent } from "./library-components/new-book/new-book.component";
 import { BookDetailsComponent } from "./library-components/book-details/book-details.component";
 import { LoginComponent } from "./login/login.component";
+import { AuthGuard } from "./auth/user-auth.guard";
+import { UserSignUpComponent } from "./user-components/user-sign-up/user-sign-up.component";
+
 const routes: Routes = [
   { path: "", component: LoginComponent },
-  { path: "book-list", component: BookListComponent },
-  { path: "book-detail", component: BookDetailsComponent },
-  { path: "new-book", component: NewBookComponent }
+  { path: "register", component: UserSignUpComponent },
+  {
+    path: "book-list",
+    component: BookListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "book-detail",
+    component: BookDetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "new-book",
+    component: NewBookComponent,
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({

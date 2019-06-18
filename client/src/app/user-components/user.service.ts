@@ -1,9 +1,13 @@
-import { Injectable } from '@angular/core';
-
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { AppConstants } from "../shared/app.constants";
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UserService {
+  constructor(private http: HttpClient) {}
 
-  constructor() { }
+  register(userModel: any) {
+    return this.http.post<any>(AppConstants.USERS_URL + "/register", userModel);
+  }
 }

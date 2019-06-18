@@ -33,15 +33,18 @@ module.exports.handler = (event, $options, callback) => {
         };
         // Issue JWT
         const token = jwt.sign(payload, JWT_SECRET, signOptions);
+        const expirationTime = JWT_EXPIRATION_TIME.split("m").join("");
+        const bodyPayload = {
+          token: token,
+          expiresIn: expirationTime
+        };
         const response = {
           // Success response
           statusCode: 200,
           headers: {
             "Access-Control-Allow-Origin": "*"
           },
-          body: JSON.stringify({
-            token
-          })
+          body: JSON.stringify(bodyPayload)
         };
 
         // Return response
