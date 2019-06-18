@@ -1,25 +1,8 @@
 "use strict";
 const User = require("../models/User");
 const utils = require("../utils");
-const UserProfile = require("../models/UserProfile");
+const roles = require("./roles");
 const uuidv4 = require("uuid/v4");
-
-module.exports.create = (event, context, callback) => {
-  User.create(JSON.parse(event.body))
-    .then(user =>
-      callback(null, {
-        statusCode: 200,
-        body: JSON.stringify(user)
-      })
-    )
-    .catch(err =>
-      callback(null, {
-        statusCode: err.statusCode || 500,
-        headers: { "Content-Type": "text/plain" },
-        body: "Could not create the user."
-      })
-    );
-};
 
 module.exports.getOne = (event, context, callback) => {
   User.findById(event.pathParameters.id)
@@ -34,23 +17,6 @@ module.exports.getOne = (event, context, callback) => {
         statusCode: err.statusCode || 500,
         headers: { "Content-Type": "text/plain" },
         body: "Could not fetch the user."
-      })
-    );
-};
-
-module.exports.getAll = (event, context, callback) => {
-  User.find()
-    .then(users =>
-      callback(null, {
-        statusCode: 200,
-        body: JSON.stringify(users)
-      })
-    )
-    .catch(err =>
-      callback(null, {
-        statusCode: err.statusCode || 500,
-        headers: { "Content-Type": "text/plain" },
-        body: "Could not fetch the users."
       })
     );
 };
@@ -97,22 +63,30 @@ module.exports.delete = (event, context, callback) => {
 module.exports.login = (email, password, callback) => {
   User.findOne({ "profile.email": email })
     .then(user => {
-      console.log(user);
       if (user) {
         utils.hashPassword(
           password,
           user.credentials.passwordSalt,
           (err, passwordHash) => {
             if (passwordHash == user.credentials.password.value) {
-              const userProfile = {
-                lastName: user.profile.lastName,
-                firstName: user.profile.firstName,
-                login: user.profile.login,
-                email: user.profile.email
-              };
-              console.log(userProfile);
+              roles.getById(user._id, null, (err, result) => {
+                const userProfile = {
+                  lastName: user.profile.lastName,
+                  firstName: user.profile.firstName,
+                  login: user.profile.login,
+                  email: user.profile.email
+                };
+                let role = null;
+                if (result.statusCode === 200) {
+                  role = result.body.role;
+                }
+                const payload = {
+                  userProfile,
+                  role
+                };
 
-              return callback(null, userProfile);
+                return callback(null, payload);
+              });
             } else {
               return callback(null, null);
             }
@@ -129,10 +103,10 @@ module.exports.register = (event, context, callback) => {
   const body = JSON.parse(event.body);
   const newUser = body["newUser"];
   const plainPassword = body["password"];
-  console.log(newUser);
+  const role = body["role"];
+
   User.findOne({ email: newUser.email })
     .then(user => {
-      console.log(user);
       if (user) {
         return callback(null, {
           statusCode: 403,
@@ -141,9 +115,7 @@ module.exports.register = (event, context, callback) => {
         });
       } else {
         const passwordSalt = uuidv4();
-        console.log(passwordSalt);
         utils.hashPassword(plainPassword, passwordSalt, (err, passwordHash) => {
-          console.log(passwordHash);
           const credentials = {
             password: {
               value: passwordHash
@@ -157,6 +129,15 @@ module.exports.register = (event, context, callback) => {
           };
           User.create(newUserModel)
             .then(user => {
+              const _id = user._id;
+              roles.addRole(_id, role, (err, result) => {
+                if (result.statusCode !== 200) {
+                  return callback(null, {
+                    status: result.statusCode,
+                    body: result.body
+                  });
+                }
+              });
               const userProfile = user.profile;
               return callback(null, {
                 statusCode: 200,

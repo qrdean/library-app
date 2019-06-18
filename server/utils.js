@@ -22,6 +22,5 @@ module.exports.buildIAMPolicy = (userId, effect, resource, context) => {
 module.exports.hashPassword = (password, salt, callback) => {
   const iterations = 10000;
   const keyLen = 64; // 64 bit.
-  console.log("before crypto");
   crypto.pbkdf2(password, salt, iterations, keyLen, "sha256", callback);
 };

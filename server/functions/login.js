@@ -25,10 +25,10 @@ module.exports.handler = (event, $options, callback) => {
   try {
     // Authenticate user
     users.login(email, password, (err, result) => {
-      console.log(result);
       const user = result;
       const payload = {
-        user: user
+        profile: user.userProfile,
+        role: user.role
       };
       // Issue JWT
       const token = jwt.sign(payload, JWT_SECRET, signOptions);

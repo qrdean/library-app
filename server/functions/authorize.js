@@ -10,10 +10,49 @@ const JWT_PUBLIC = fs.readFileSync("./public.key", "utf8");
 // A user with scopes: ['books'] can
 // call get books
 const authorizeUser = (userScopes, methodArn) => {
-  const hasValidScope = _.some(userScopes, scope =>
-    _.endsWith(methodArn, scope)
-  );
-  return hasValidScope;
+  const apiOptions = parseARN(methodArn);
+  const privileges = userScopes.find(scope => scope.path === apiOptions.path);
+  if (privileges) {
+    const restMethodArray = privileges.restMethods.filter(
+      restMethod => restMethod === apiOptions.restMethod
+    );
+    const hasValidScope = restMethodArray.length > 0 ? true : false;
+    return hasValidScope;
+  }
+  return false;
+};
+
+const parseARN = methodArn => {
+  let apiOptions = {};
+  let tmp = methodArn.split(":");
+  let apiGatewayArnTmp = tmp[5].split("/");
+  apiOptions.restApiId = apiGatewayArnTmp[0];
+  apiOptions.stage = apiGatewayArnTmp[1];
+  apiOptions.restMethod = apiGatewayArnTmp[2];
+  apiOptions.path = apiGatewayArnTmp[3];
+  return apiOptions;
+};
+
+const authorizations = userRole => {
+  // admin
+  const adminPrivileges = [
+    {
+      path: "books",
+      restMethods: ["GET", "POST", "PUT", "DELETE"]
+    }
+  ];
+  const userPrivileges = [
+    {
+      path: "books",
+      restMethods: ["GET", "POST", "PUT"]
+    }
+  ];
+  if (userRole == 1) {
+    return adminPrivileges;
+  } else if (useRole == 2) {
+    return userPrivileges;
+  }
+  return [];
 };
 
 /**
@@ -24,9 +63,7 @@ const authorizeUser = (userScopes, methodArn) => {
  * @throws Returns 403 if the token does not have sufficient permissions.
  */
 module.exports.handler = (event, context, callback) => {
-  console.log(event);
   const token = event.authorizationToken;
-  console.log(token);
   const signOptions = {
     expiresIn: JWT_EXPIRATION_TIME,
     algorithm: ["RS256"]
@@ -34,21 +71,21 @@ module.exports.handler = (event, context, callback) => {
   try {
     // Verify JWT
     const decoded = jwt.verify(token, JWT_PUBLIC, signOptions);
-    console.log(decoded);
-    const user = decoded.user;
-    console.log(user);
-
+    const profile = decoded.profile;
+    const role = decoded.role;
+    const scopes = authorizations(role);
     // Checks if the user's scopes allow her to call the current function
-    const isAllowed = authorizeUser(user.scopes, event.methodArn);
+    const isAllowed = authorizeUser(scopes, event.methodArn);
 
     const effect = isAllowed ? "Allow" : "Deny";
-    const userId = user.email;
-    const authorizerContext = { user: JSON.stringify(user) };
+    const userId = profile.email;
+    const authorizerContext = { user: JSON.stringify(profile) };
     // Returan an IAM policy document for the current endpoint
     const policyDocument = utils.buildIAMPolicy(
       userId,
       effect,
-      event.methodArn,
+      "*",
+      // event.methodArn,
       authorizerContext
     );
 
